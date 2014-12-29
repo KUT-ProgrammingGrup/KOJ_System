@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+.content .judge .accepted {
+	color: #173eff;
+}
+
+.content .judge .wrong_answer {
+	color: #cc4a1a;
+}
+
+.content .submit input[type="file"] {
+	width: 300px;
+}
+
+/* vim: se noet ts=4 sts=0 sw=4 ft=css : */

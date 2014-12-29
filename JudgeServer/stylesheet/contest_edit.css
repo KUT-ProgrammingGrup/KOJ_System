@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+.edit .problem_template {
+	display: none;
+}
+
+.edit .problem h4 {
+	position: relative;
+}
+.edit .problem h4 input {
+	position: absolute;
+	top: 6px;
+	right: 8px;
+	font-size: 14px;
+}
+
+.edit p.date label {
+	display: block;
+}
+
+.edit p.date .year {
+	width: 50px !important;
+}
+
+.edit p.date .month,
+.edit p.date .date,
+.edit p.date .hour,
+.edit p.date .minute {
+	width: 25px !important;
+}
+
+/* vim: se noet ts=4 sts=0 sw=4 ft=css : */

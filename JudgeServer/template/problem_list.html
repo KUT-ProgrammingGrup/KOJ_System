@@ -1,0 +1,61 @@
+{% extends "default.html" %}
+
+{# Last Change: 2011/11/13 17:24:19 +0900. #}
+
+{# template/problem_list.html #}
+{# 問題一覧 #}
+
+{# ---------- タイトル ---------- #}
+{% block title %}問題一覧{% endblock %}
+
+{# ---------- スクリプト ---------- #}
+{% block javascript %}
+
+{% if is_admin %}
+<script type="text/javascript" src="/javascript/problem_list.js" defer="defer"></script>
+{% endif %}
+
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/page/">ページ</a></li>
+	<li><a href="/contest/">コンテスト</a></li>
+	
+	{% if is_admin %}
+	<li class="delimiter"><a href="javascript: void 0" class="new">新規</a></li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>問題一覧</h2>
+
+{% if problem_list %}
+
+<ul>
+	{% for problem in problem_list %}
+
+	{# 問題が公開に設定されているか、管理者な場合表示 #}
+	{% if problem.public or is_admin %}
+	<li>
+		<a href="/problem/{{ problem.id }}/">{{ problem.id }}: {{ problem.title }}</a>
+
+		{% if not problem.public %}
+		[非公開]
+		{% endif %}
+	</li>
+	{% endif %}
+	{% endfor %}
+</ul>
+
+{% else %}
+<p>問題が存在しません。</p>
+{% endif %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

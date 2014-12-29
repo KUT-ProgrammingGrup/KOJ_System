@@ -1,0 +1,118 @@
+{% extends "default.html" %}
+
+{# template/page_edit.html #}
+{# ページ編集 テンプレート #}
+
+{# Last Change: 2011/11/14 16:56:55 +0900. #}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+ページ「{{ page_id }}」の編集
+{% endblock %}
+
+{# ---------- スタイルシート ---------- #}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/edit.css" />
+{% endblock %}
+
+{# ---------- スクリプト ---------- #}
+{% block javascript %}
+<script type="text/javascript" src="/javascript/page_edit.js" defer="defer"></script>
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/page/{{ page_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>ページ「{{ page_id }}」の編集</h2>
+
+<div class="edit">
+	
+	{# 編集フォーム #}
+	<form action="/page/{{ page_id }}/edit/" method="post">
+		<p>
+			<label>
+				ページタイトル
+				<input name="title" type="text" value="{{ page_title }}" />
+			</label>
+		</p>
+		
+		<p>
+			<label>
+				本文
+				<textarea name="text" rows="25" cols="60">{{ page_text }}</textarea>
+			</label>
+		</p>
+		
+		<p>
+			本文には Wiki (Creole 1.0) の文法が利用できます (<a href="/page/creole/">詳細</a>)。
+		</p>
+		
+		<p>
+			{# キャンセルボタン: JavaScript により、編集ページから戻る #}
+			<input type="button" value="キャンセル" class="cancel" />
+			
+			<input type="submit" value="保存" />
+		</p>
+		
+		<h3>ページの公開</h3>
+		
+		<p>
+			<label>
+				<input type="checkbox" name="public" value="true"
+				{% if page_public %}
+				checked="checked"
+				{% endif %}
+				/>
+				
+				ページを公開する
+			</label>
+		</p>
+		
+		<p>
+			ページを誰でも閲覧可能にするには、ページを公開する必要があります。<br />
+			非公開で作成したページは管理者のみが閲覧できます。
+		</p>
+		
+		<h3>学内限定</h3>
+		
+		<p>
+			<label>
+				<input type="checkbox" name="internal" value="true"
+				{% if page_internal %}
+				checked="checked"
+				{% endif %}
+				/>
+				
+				ページを学内限定にする
+			</label>
+		</p>
+		
+		<p>
+			ページを学内プロキシ経由のみで公開したい場合、学内限定にしてください。
+		</p>
+	</form>
+	
+	{# ページが既に存在する場合、ページの削除を表示 #}
+	{% if page %}
+	<h2>ページの削除</h2>
+	
+	<form action="/page/{{ page_id }}/delete/" method="post" class="delete">
+		<p><input type="submit" value="削除" /></p>
+	</form>
+	
+	<p>一度削除したページは復活できません。</p>
+	<p>このページに添付されているファイルも削除されます。</p>
+	{% endif %}
+	
+</div>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sts=0 sw=2 ft=htmldjango : #}

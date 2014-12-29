@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+.content .edit p {
+	margin-bottom: 15px;
+}
+
+.content .edit input[type="text"],
+.content .edit input[type="file"] {
+	width: 300px;
+}
+
+.content .edit label input,
+.content .edit label textarea {
+	display: block;
+	padding: 2px 3px;
+	font-size: 13px;
+}
+
+.content .edit label input[type="checkbox"] {
+	display: inline-block;
+	margin-left: 10px;
+	border: 1px solid gray;
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+}
+
+.content .edit label a {
+	vertical-align: middle;
+	font-size: 14px;
+}
+
+.content .edit textarea {
+	margin: 0;
+	width: 610px;
+}
+
+/* vim: se noet ts=4 sts=0 sw=4 ft=css : */

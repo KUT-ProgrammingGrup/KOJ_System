@@ -1,0 +1,79 @@
+{% extends "default.html" %}
+
+{# Last Change: 2012/04/30 16:18:45 +0900. #}
+
+{# template/contest_list.html #}
+{# コンテスト一覧ページ テンプレート #}
+
+{# ---------- タイトル ---------- #}
+{% block javascript %}
+
+{% if is_admin %}
+<script type="text/javascript" src="/javascript/contest_list.js" defer="defer"></script>
+{% endif %}
+
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}コンテスト一覧{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/page/">ページ</a></li>
+	<li><a href="/problem/">問題</a></li>
+	
+	{# 管理者な場合、新規作成リンクを表示 #}
+	{% if is_admin %}
+	<li class="delimiter"><a href="javascript: void 0" class="new">新規</a></li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>コンテスト一覧</h2>
+
+<table>
+	
+	<tr>
+		<th>タイトル</th>
+		<th>開始日時</th>
+		<th>終了日時</th>
+		<th>状態</th>
+	</tr>
+	
+	{% for contest in contest_list %}
+	
+	{# ページが公開に設定されているか、管理者な場合に表示 #}
+	{% if contest.public or is_admin %}
+	<tr>
+		<td>
+			<a href="/contest/{{ contest.id }}/">{{ contest.title }}</a>
+			
+			{% if not contest.public %}
+			[非公開]
+			{% endif %}
+		</td>
+		<td>{{ contest.start_date|date:"Y/m/d H:i"|default:"未定" }}</td>
+		<td>{{ contest.end_date|date:"Y/m/d H:i"|default:"未定" }}</td>
+		<td>
+			{% if contest.is_end %}
+			終了
+			{% else %}{% if contest.is_start %}
+			開催中
+			{% else %}
+			開催予定
+			{% endif %}{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	
+	{% endfor %}
+	
+</table>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

@@ -1,0 +1,191 @@
+{% extends "default.html" %}
+
+{# template/problem_result.html #}
+{# 問題結果ページ テンプレート #}
+
+{# Last Change: 2011/11/15 13:28:25 +0900. #}
+
+{# ---------- スタイルシート ---------- #}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/problem_result.css" />
+{% endblock %}
+
+{# ---------- スクリプト ---------- #}
+{% block javascript %}
+<script type="text/javascript" src="/javascript/problem_result.js"></script>
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+問題「{{ problem_title }}」結果
+
+{% if not problem_public %}
+[非公開]
+{% endif %}
+
+{% endblock %}
+
+{# ---------- ワーニング ---------- #}
+{% block warning %}
+
+{% if not problem_public %}
+<p>警告: この問題は非公開に設定されています。管理者以外には表示されません。</p>
+{% endif %}
+
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/problem/{{ problem_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>判定: 問題「{{ problem_title }}」</h2>
+
+<div class="judge">
+	{# ログインしている場合 #}
+	{% if is_login %}
+
+	{% if problem_small %}
+	<p>small: 
+
+		{% if answer_small %}
+		<strong class="accepted">正解</strong>
+		{{ answer_small.date|date:"Y/m/d H:i" }}
+		{% else %}
+		<strong class="wrong_answer">不正解、もしくは未提出</strong>
+		{% endif %}
+	</p>
+	{% endif %}
+
+	{% if problem_large %}
+	<p>large: 
+		{% if answer_large %}
+		<strong class="accepted">正解</strong>
+		{{ answer_large.date|date:"Y/m/d H:i" }}
+		{% else %}
+		<strong class="wrong_answer">不正解、もしくは未提出</strong>
+		{% endif %}
+	</p>
+	{% endif %}
+
+	{% if problem_small or problem_large %}
+	<p>判定には、最後の正解が反映されます。</p>
+	{% else %}
+	<p>入力ファイルが設定されていないため、判定を表示しません。</p>
+	{% endif %}
+	
+	{# ログインしていない場合 #}
+	{% else %}
+	<p>判定を見るにはログインしてください。</p>
+	{% endif %}
+</div>
+
+<h2>解答の提出</h2>
+
+<div class="submit">
+	
+	{# ログインしている場合 #}
+	{% if is_login %}
+
+	{% if not problem_small and not problem_large %}
+	<p>入力ファイルが設定されていないため、解答を提出できません。</p>
+	{% endif %}
+
+	{% if problem_small %}
+	<h3>small 
+		{% if answer_small %}[正解]{% endif %}
+	</h3>
+
+	<p><a href="/problem/{{ problem_id }}/{{ problem_id }}-small.in">入力ファイル</a></p>
+
+	<form action="/problem/{{ problem_id }}/submit/small/" method="post" enctype="multipart/form-data">
+		<p>
+			<label>
+				出力ファイル
+				<input type="file" name="output" />
+			</label>
+		</p>
+
+		<p>
+			<label>
+				ソースコード
+				<input type="file" name="source" />
+			</label>
+		</p>
+
+		<p>
+			<input type="submit" value="提出" />
+		</p>
+	</form>
+	{% endif %}
+
+	{% if problem_large %}
+	<h3>large
+		{% if answer_large %}[正解]{% endif %}
+	</h3>
+
+	<p><a href="/problem/{{ problem_id }}/{{ problem_id }}-large.in">入力ファイル</a></p>
+
+	<form action="/problem/{{ problem_id }}/submit/large/" method="post" enctype="multipart/form-data">
+		<p>
+			<label>
+				出力ファイル
+				<input type="file" name="output" />
+			</label>
+		</p>
+
+		<p>
+			<label>
+				ソースコード
+				<input type="file" name="source" />
+			</label>
+		</p>
+
+		<p>
+			<input type="submit" value="提出" />
+		</p>
+	</form>
+	{% endif %}
+	
+	{# ログインしていない場合 #}
+	{% else %}
+	<p>解答を提出するには、ログインしてください。</p>
+	{% endif %}
+
+</div>
+
+{# 管理者な場合、回答一覧を表示させる #}
+{% if is_admin %}
+<h2>解答</h2>
+
+<div class="answer">
+	<table>
+		<tr>
+			<th>サイズ</th>
+			<th>ユーザー名</th>
+			<th>ソースファイル</th>
+			<th>提出日時</th>
+		</tr>
+		
+		{% for answer in answer_list %}
+		{# HTML 変更注意。JavaScript からリンク URL の修正あり。 #}
+		<tr>
+			<td>{{ answer.size }}</td>
+			<td><a href="/user/{{ answer.user_id }}/">{{ answer.nickname }}</a></td>
+			<td><a href="/problem/{{ problem_id }}/{{ answer.user_id }}/{{ answer.size }}/">{{ answer.filename }}</a></td>
+			<td>{{ answer.date|date:"Y/m/d H:i" }}</td>
+		</tr>
+		{% endfor %}
+</table>
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

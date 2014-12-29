@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+/* stylesheet/attach.js */
+/* 添付ファイル スタイルシート */
+
+/* Last Change: 2011/11/08 16:50:58 +0900. */
+
+.content .attach ul form, .content .attach ul * {
+	display: inline;
+}
+
+.content .attach input[type="file"] {
+	width: 390px;
+}
+
+/* vim: se noet ts=4 sts=0 sw=4 ft=css : */

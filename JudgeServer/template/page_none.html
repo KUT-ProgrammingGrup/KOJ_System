@@ -1,0 +1,44 @@
+{% extends "default.html" %}
+
+{# template/page_none.html #}
+{# 未作成ページ テンプレート #}
+
+{# Last Change: 2011/11/13 17:09:19 +0900. #}
+
+{# ---------- メタデータ ---------- #}
+{% block meta %}
+
+{# インデックスさせない #}
+<meta name="ROBOTS" content="NOINDEX" />
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	{% include "default_taskbar_etc.html" %}
+	
+	{# 管理者な場合、新規作成リンクを表示 #}
+	{% if is_admin %}
+	<li class="delimiter"><a href="/page/{{ page_id }}/edit/">新規</a></li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}未作成ページ{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>未作成ページ</h2>
+
+<p>「{{ page_id }}」ページは存在しません。</p>
+
+{# 管理者でない場合 #}
+{% if not is_admin %}
+<p>ページを作成するには、管理者としてログインしてください。</p>
+{% endif %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sts=0 sw=2 ft=htmldjango : #}

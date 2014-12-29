@@ -1,0 +1,34 @@
+{% extends "default.html" %}
+
+{# template/user_none.html #}
+{# 未作成ユーザー テンプレート #}
+
+{# Last Change: 2011/11/13 15:48:11 +0900. #}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+プロフィール未作成
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	{% include "default_taskbar_etc.html" %}
+	
+	{# 管理者もしくは本人な場合、新規プロフィールの作成を許可する #}
+	{% if is_admin or user_id == user_user_id %}
+	<li><a href="/user/{{ user_id }}/edit/">新規</a></li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>プロフィール未作成</h2>
+
+<p>ユーザーのプロフィール情報が作成されていません。</p>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

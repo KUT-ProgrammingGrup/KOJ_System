@@ -1,0 +1,42 @@
+{% extends "default.html" %}
+
+{# template/problem_none.html #}
+{# 未作成問題 テンプレート #}
+
+{# ---------- メタデータ ---------- #}
+{% block meta %}
+
+{# インデックスしないようにする #}
+<meta name="ROBOTS" content="NOINDEX" />
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+未作成問題
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	{% include "default_taskbar_etc.html" %}
+
+	{% if is_admin %}
+	<li class="delimiter"><a href="/problem/{{ problem_id }}/edit/">新規</a></li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+<h2>未作成問題</h2>
+
+<p>問題「{{ problem_id }}」は存在しません。</p>
+
+{# 管理者でない場合 #}
+{% if not is_admin %}
+<p>問題を作成するには、管理者としてログインしてください。</p>
+{% endif %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

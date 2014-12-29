@@ -1,0 +1,55 @@
+{% extends "default.html" %}
+
+{# template/user_edit.html #}
+{# ユーザー編集 テンプレート #}
+
+{# Last Change: 2011/11/13 15:50:27 +0900. #}
+
+{# ---------- スタイルシート ---------- #}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/user_edit.css" />
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+プロフィールの編集
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/user/{{ user_user_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- プロフィール ---------- #}
+{% block content %}
+
+<h2>プロフィールの編集</h2>
+
+<div class="edit">
+	<form action="/user/{{ user_user_id }}/edit/" method="post">
+		<p>
+			<label>
+				ニックネーム
+				<input type="text" name="nickname" value="{{ user_nickname }}" />
+			</label>
+		</p>
+
+		<p>
+			<label>
+				所属
+				<input type="text" name="affiliation" value="{{ user_affiliation }}" />
+			</label>
+		</p>
+
+		<p>
+			<input type="submit" value="変更" />
+		</p>
+	</form>
+
+</div>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

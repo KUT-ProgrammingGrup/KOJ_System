@@ -1,0 +1,84 @@
+{% extends "default.html" %}
+
+{# template/contest_ranking.html #}
+{# コンテストランキング テンプレート #}
+
+{# Last Change: 2012/06/20 21:52:29 +0900. #}
+
+{# ---------- タイトル ---------- #}
+{% block title %}ランキング 「{{ contest_title }}」{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/contest/{{ contest_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+<h2>ランキング 「{{ contest_title }}」</h2>
+
+<table>
+	<tr>
+		<th>順位</th>
+		<th>HN</th>
+		
+		{% for problem in contest_problem %}
+		
+		{% if problem.1 %}
+		<th>{{ forloop.counter0 }}S</th>
+		{% endif %}
+		
+		{% if problem.2 %}
+		<th>{{ forloop.counter0 }}L</th>
+		{% endif %}
+		
+		{% endfor %}
+		
+		<th>合計</th>
+		<th>最終正解時刻</th>
+	</tr>
+	
+	{# ユーザーを表示する #}
+	{% for user in contest_ranking %}
+	{% if user.point_sum > 0 %}
+	<tr>
+		<td>{{ user.ranking }}</td>
+		<td><a href="/user/{{ user.user_id }}/">{{ user.nickname }}</a></td>
+		
+		{% for point in user.point %}
+		
+		{% if point.0 %}
+		<td>
+			{% if point.0 > 0 %}
+			{{ point.0 }}
+			{% else %}
+			-
+			{% endif %}
+		</td>
+		{% endif %}
+		
+		{% if point.1 %}
+		<td>
+			{% if point.1 > 0 %}
+			{{ point.1 }}
+			{% else %}
+			-
+			{% endif %}
+		</td>
+		{% endif %}
+		
+		{% endfor %}
+		
+		<td>{{ user.point_sum }}</td>
+		<td>{{ user.date|date:"m/d H:i:s" }}</td>
+	</tr>
+	{% endif %}
+	{% endfor %}
+
+</table>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

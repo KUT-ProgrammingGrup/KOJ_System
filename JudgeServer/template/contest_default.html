@@ -1,0 +1,163 @@
+{% extends "default.html" %}
+
+{# template/contest_default.html #}
+{# コンテスト一覧 テンプレート #}
+
+{# Last Change: 2011/11/13 17:56:36 +0900. #}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+コンテスト 「{{ contest_id }}」
+
+{% if not contest_public %}
+[非公開]
+{% endif %}
+
+{% endblock %}
+
+{# ---------- ワーニング ---------- #}
+{% block warning %}
+
+{% if not contest_public %}
+<p>警告: このコンテストは非公開に設定されています。管理者以外には表示されません。</p>
+{% endif %}
+
+{% endblock %}
+
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	{% include "default_taskbar_etc.html" %}
+	
+	{# 詳細ページが存在する場合 #}
+	{% if contest_page %}
+	<li class="delimiter">
+		<a href="/page/{{ contest_page }}/">詳細</a>
+	</li>
+	{% endif %}
+	
+	{# コンテストが開始されている場合、ランキングを表示 #}
+	{% if contest_is_start %}
+	<li{% if not contest_page %} class="delimiter"{% endif %}> {# 詳細がなければ、デリミタを表示 #}
+		<a href="/contest/{{ contest_id }}/ranking/">ランキング</a>
+	</li>
+	{% endif %}
+	
+	{# 管理者な場合、編集リンクを表示 #}
+	{% if is_admin %}
+	<li class="delimiter"><a href="/contest/{{ contest_id }}/edit/">編集</a></li>
+	{% endif %}
+	
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>{{ contest_title }}</h2>
+
+<h3>概要</h3>
+
+<table>
+	<tr>
+		<th>コンテスト名</th>
+		<td>
+			{# 詳細ページが存在する場合 #}
+			{% if contest_page %}
+			
+			<a href="/page/{{ contest_page }}/">{{ contest_title }}</a>
+			{% else %}
+			{{ contest_title }}
+			{% endif %}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>開始日時</th>
+		<td>{{ contest_start_date|date:"Y/m/d H:i"|default:"未定" }}</td>
+	</tr>
+	
+	<tr>
+		<th>終了日時</th>
+		<td>{{ contest_end_date|date:"Y/m/d H:i"|default:"未定" }}</td>
+	</tr>
+	
+	<tr>
+		<th>状態</th>
+		<td>
+		{% if contest_is_end %}
+		終了
+		{% else %}{% if contest_is_start %}
+		開催中
+		{% else %}
+		開催予定
+		{% endif %}{% endif %}
+		</td>
+	</tr>
+
+	{% if is_admin  %}
+	<tr>
+		<th>公開状態</th>
+		<td>
+			{% if contest_public %}
+			公開
+			{% else %}
+			非公開
+			{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+</table>
+
+{# コンテストが公開状態で始まっているか、管理者な場合表示 #}
+{% if contest_is_start or is_admin %}
+
+<h3>問題一覧</h3>
+
+<table>
+	<tr>
+		<th rowspan="2">問題番号</th>
+		
+		{% if is_admin %}
+		<th rowspan="2">問題ID</th>
+		{% endif %}
+		
+		<th rowspan="2">タイトル</th>
+		<th colspan="2">点数</th>
+	</tr>
+
+	<tr>
+		<th>small</th>
+		<th>large</th>
+	</tr>
+	
+	{% for problem in contest_problem %}
+	<tr>
+		<td>{{ problem.num }}</td>
+		
+		{% if is_admin %}
+		<td>{{ problem.id }}</td>
+		{% endif %}
+		
+		<td>
+			<a href="/contest/{{ contest_id }}/{{ problem.id }}/">
+				{% if problem.title %}
+				{{ problem.title }}
+				{% else %}
+				未作成問題
+				{% endif %}
+			</a>
+		</td>
+		
+		<td>{{ problem.point_small|default:"-" }}</td>
+		<td>{{ problem.point_large|default:"-" }}</td>
+	</tr>
+	{% endfor %}
+
+</table>
+{% endif %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

@@ -1,0 +1,56 @@
+{% extends "default.html" %}
+
+{# template/user_default.html #}
+{# ユーザー情報 テンプレート #}
+
+{# Last Change: 2011/11/15 13:44:25 +0900. #}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+ユーザー情報の表示
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	
+	{% include "default_taskbar_etc.html" %}
+	
+	{# 管理者もしくは本人の場合、編集を許可 #}
+	{% if is_admin or user_id == user_user_id %}
+	<li class="delimiter"><a href="/user/{{ user_user_id }}/edit/">編集</a></li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>ユーザー情報の表示</h2>
+
+<table>
+	<tr>
+		<th>ユーザーID</th>
+		<td>{{ user_user_id }}</td>
+	</tr>
+	
+	{% if user_nickname %}
+	<tr>
+		<th>ニックネーム</th>
+		<td>{{ user_nickname }}</td>
+	</tr>
+	{% endif %}
+
+	{% if user_affiliation %}
+	<tr>
+		<th>所属</th>
+		<td>{{ user_affiliation }}</td>
+	</tr>
+	{% endif %}
+</table>
+
+<p>ニックネームは重複が許されますが、ユーザーID はユニークな識別子です。</p>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

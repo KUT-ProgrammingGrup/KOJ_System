@@ -1,0 +1,63 @@
+{% extends "default.html" %}
+
+{# template/problem_default.html #}
+{# 問題ページ テンプレート #}
+
+{# Last Change: 2012/06/19 21:10:02 +0900. #}
+
+{# ---------- スクリプト ---------- #}
+{% block javascript %}
+<script type="text/javascript" src="/javascript/problem_default.js"></script>
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+{{ problem_title }}
+
+{% if not problem_public %}
+[非公開]
+{% endif %}
+
+{% endblock %}
+
+{# ---------- ワーニング ---------- #}
+{% block warning %}
+
+{% if not problem_public %}
+<p>警告: この問題は非公開に設定されています。管理者以外には表示されません。</p>
+{% endif %}
+
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+
+<ul class="etc">
+	{% include "default_taskbar_etc.html" %}
+	
+	<li class="delimiter"><a href="/problem/{{ problem_id }}/result/">結果</a></li>
+	
+	{% if is_admin %}
+	<li class="delimiter"><a href="/problem/{{ problem_id }}/edit/">編集</a></li>
+	<li><a href="/problem/{{ problem_id }}/attach/">添付</a></li>
+	{% endif %}
+</ul>
+
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+{{ problem_text|safe }}
+
+<div class="noprint">
+	<h2>解答の提出</h2>
+
+	<p><a href="/problem/{{ problem_id }}/result/">結果</a>ページから提出してください。</p>
+</div>
+
+{% include "bookmark.html" %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sts=0 sw=2 ft=htmldjango : #}
+

@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+.edit form input {
+	padding: 1px 2px;
+}
+
+.edit form input[type="text"] {
+	display: block;
+}
+
+.edit form input[name="nickname"] {
+	width: 160px;
+}
+
+.edit form input[name="affiliation"] {
+	width: 400px;
+}
+
+/* vim: se noet ts=4 sts=0 sw=4 ft=css : */

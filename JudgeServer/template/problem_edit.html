@@ -1,0 +1,162 @@
+{% extends "default.html" %}
+
+{# template/problem_edit.html #}
+{# 問題編集 テンプレート #}
+
+{# Last Change: 2011/11/14 16:55:01 +0900. #}
+
+{# ---------- スタイルシート ---------- #}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/edit.css" />
+{% endblock %}
+
+{# ---------- スタイルシート ---------- #}
+{% block javascript %}
+<script type="text/javascript" src="/javascript/problem_edit.js"></script>
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}問題「{{ problem_id }} 」の編集{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/problem/{{ problem_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>問題「{{ problem_id }}」の編集</h2>
+
+<div class="edit">
+		
+	<form action="/problem/{{ problem_id }}/edit/" method="post" enctype="multipart/form-data">
+		<p>
+			<label>
+				問題タイトル
+				<input type="text" name="title" value="{{ problem_title }}" />
+			</label>
+		</p>
+
+		<p>
+			<label>
+				問題文
+				<textarea name="text" rows="25" cols="60">{{ problem_text }}</textarea>
+			</label>
+		</p>
+
+		<p>
+			<input type="button" value="キャンセル" class="cancel" />
+			<input type="submit" value="保存" />
+		</p>
+
+		<p>
+			問題文には Wiki 文法 (Creole 記法) が利用できます (<a href="/page/creole/">詳細</a>)。
+		</p>
+		
+		<h3>入出力ファイル</h2>
+
+		<p>
+			<label>
+				<input type="checkbox" name="io_edit" value="true" />
+				入出力ファイルを編集する
+			</label>
+		</p>
+
+		<p>入出力ファイルの編集を反映させるには、上のチェックボックスにチェックを付けてください。</p>
+		
+		<p>チェックがされていない場合、入出力ファイルは編集前の状態が保持されます。</p>
+		
+		<p>
+			<label>
+				入力ファイル (small)
+
+				{% if problem_small %}
+				<a href="/problem/{{ problem_id }}/{{ problem_id }}-small.in">現在のファイル</a>
+				{% endif %}
+				
+				<input type="file" name="input_small" />
+			</label>
+		</p>
+
+		<p>
+			<label>
+				出力ファイル (small)
+				
+				{% if problem_small %}
+				<a href="/problem/{{ problem_id }}/{{ problem_id }}-small.out">現在のファイル</a>
+				{% endif %}
+				
+				<input type="file" name="output_small" />
+			</label>
+		</p>
+		
+		<p>
+			<label>
+				入力ファイル (large)
+				
+				{% if problem_large %}
+				<a href="/problem/{{ problem_id }}/{{ problem_id }}-large.in">現在のファイル</a>
+				{% endif %}
+				
+				<input type="file" name="input_large" />
+			</label>
+		</p>
+		
+		<p>
+			<label>
+				出力ファイル (large)
+				
+				{% if problem_large %}
+				<a href="/problem/{{ problem_id }}/{{ problem_id }}-large.out">現在のファイル</a>
+				{% endif %}
+				
+				<input type="file" name="output_large" />
+			</label>
+		</p>
+		
+		<h3>問題の公開</h3>
+
+		<p>
+			<label>
+				<input type="checkbox" name="public" value="true"
+				{% if problem_public %}
+				checked="checked"
+				{% endif %}
+				/>
+				
+				問題を公開する
+			</label>
+		</p>
+		
+		<p>問題を公開し、解答を提出可能な状態にする場合、上のチェックボックスにチェックを付けてください。</p>
+		
+		<p>
+			<span class="underline">
+				コンテスト用の問題は、<strong>非公開</strong>の状態で作成する必要があります。<br />
+			</span>
+			
+			コンテスト開始時に、自動的に公開されます。
+		</p>
+		
+		
+	</form>
+	
+	{# 問題の削除 #}
+	{% if problem %}
+	<h2>問題の削除</h2>
+	
+	<form action="/problem/{{ problem_id }}/delete/" method="post" class="delete">
+		<p><input type="submit" value="削除" /></p>
+	</form>
+	
+	<p class="underline">一度削除した問題は<strong>復活できません</strong>。</p>
+	<p>この問題に添付されているファイル、解答、入出力ファイルも削除されます。</p>
+	{% endif %}
+</div>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

@@ -1,0 +1,83 @@
+{% extends "default.html" %}
+
+{# template/page_attach.html #}
+{# ページ添付ファイル テンプレート #}
+
+{# Last Change: 2011/11/08 16:45:53 +0900. #}
+
+{# ---------- スタイルシート ---------- #}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/attach.css" />
+{% endblock %}
+
+{# ---------- スクリプト ---------- #}
+{% block javascript %}
+<script type="text/javascript" src="/javascript/attach.js" defer="defer"></script>
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}添付ファイル 「ページ: {{ page_id }}」{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/page/{{ page_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<div class="attach">
+	
+	<h2>ファイル一覧</h2>
+	
+	{# 添付されているファイルが存在する場合 #}
+	{% if upload_files %}
+	
+	{# ファイルの一覧を表示 #}
+	<ul>
+		
+		{% for filename in upload_files %}
+		<li>
+			<a href="/page/{{ page_id }}/{{ filename }}">{{ filename }}</a>
+			
+			{# 削除ボタン #}
+			<form action="/page/{{ page_id }}/{{ filename }}/delete/" method="post" class="delete">
+				<p><input type="submit" value="削除" /></p>
+			</form>
+		</li>
+		{% endfor %}
+		
+	</ul>
+	
+	{# 添付されているファイルは存在しない場合 #}
+	{% else %}
+	
+	<p>添付されているファイルはありません。</p>
+	
+	{% endif %}
+	
+	
+	<h2>ファイルのアップロード</h2>
+	
+	<p>アップロードするファイルを選択してください。</p>
+	
+	<p>ファイル名には日本語は使用できません。<br />
+	また、同名のファイルが存在する場合は、許可無く上書きされます。</p>
+	
+	<p>ファイル名は /^[0-9A-Za-z_\.-]+$/ である必要があります。</p>
+	
+	{# ファイル送信フォーム #}
+	<form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+		<p>
+			<input type="file" name="file" />
+			<input type="submit" value="アップロード" />
+		</p>
+	</form>
+	
+</div>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

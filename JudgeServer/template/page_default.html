@@ -1,0 +1,77 @@
+{% extends "default.html" %}
+
+{# template/page_default.html %}
+{# ページ テンプレート %}
+
+{# Last Change: 2012/06/19 21:09:46 +0900. #}
+
+{# ---------- メタ要素 ---------- #}
+{% block meta %}
+{% if page_id == 'index' %}
+<meta name="keywords" content="KOJ,KUT-PG,プログラミング,KUT,高知工科大学" />
+<meta name="description" content="KOJ は高知工科大学プログラミング集団 KUT-PG が運営するオンラインジャッジです。KOJ は、プログラミング言語を問わずご利用いただけます。" />
+{% endif %}
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}
+{{ page_title }}
+
+{# ページが非公開な場合のタイトルの処理 #}
+{% if not page_public %}
+[非公開]
+{% endif %}
+
+{# ページが学内限定な場合のタイトルの処理 #}
+{% if page_internal %}
+[学内限定]
+{% endif %}
+
+{% endblock %}
+
+{# ---------- 警告 ---------- #}
+{% block warning %}
+
+{% if not page_public %}
+<p>警告: このページは非公開に設定されています。管理者以外には表示されません。</p>
+{% endif %}
+
+{# ページが学内限定な場合の処理 #}
+{% if page_internal and page_is_internal %}
+<p>警告: このページは学内限定に設定されています。学外からは表示できません。</p>
+{% endif %}
+
+{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	
+	{% include "default_taskbar_etc.html" %}
+	
+	{% if is_admin %}
+	<li class="delimiter"><a href="/page/{{ page_id }}/edit/">編集</a></li>
+	<li><a href="/page/{{ page_id }}/attach/">添付</a></li>
+	{% endif %}
+
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+{% if page_internal and not page_is_internal %}
+<h2>学内限定</h2>
+
+<p>このページは、学内限定公開に設定されています。</p>
+{% else %}
+
+{{ page_text|safe }}
+
+{% include "bookmark.html" %}
+
+{% endif %}
+
+{% endblock %}
+
+{# vim: se noet ts=2 sts=0 sw=2 ft=htmldjango : #}

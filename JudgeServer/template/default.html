@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{# Last Change: 2012/05/14 23:00. #}
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="google-site-verification" content="se68L83lFHt44hRs_VK6M0Cnf_tgk_dl_cTqVAB_3zQ" />
+		{% block meta %}{% endblock %}
+		<link rel="stylesheet" type="text/css" href="/stylesheet/cssreset.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheet/default.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheet/prettify.css" />
+		{% block stylesheet %}{% endblock %}
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js"></script>
+		<script type="text/x-mathjax-config">
+		// <![CDATA[
+			
+			MathJax.Hub.Config({
+				tex2jax: {
+					displayMath: [['$$', '$$']],
+					inlineMath: [['$','$']]
+				}
+			});
+			
+		// ]]>
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="/javascript/prettify/prettify.js"></script>
+		<script type="text/javascript" src="/javascript/prettify/lang-pascal.js"></script>
+		<script type="text/javascript" src="/javascript/default.js"></script>
+		{% block javascript %}{% endblock %}
+		<title>KOJ : {% block title %}{% endblock %}</title>
+	</head>
+	
+	<body>
+	
+		<div class="wrap">
+			<div class="warning">
+				<noscript>
+					<p>警告: JavaScript が OFF に設定されているため、Web サイトの一部機能がご利用いただけません。</p>
+				</noscript>
+
+				<!--[if IE]>
+				<p>警告: Internet Explorer での動作確認は行なっておりません。</p>
+				<![endif]-->
+
+				{% block warning %}{% endblock %}
+			</div>
+			
+			<div class="taskbar">
+				<ul class="account">
+					{% if is_login %}
+					<li class="nickname">
+						<a href="/user/{{ user_id }}/">{{ nickname }}</a>
+
+						{% if is_admin %}
+							[管理者]
+						{% endif %}
+					</li>
+					
+					<li class="logout"><a href="{{ logout_url }}">ログアウト</a></li>
+					{% else %}
+					<li class="login"><a href="{{ login_url }}">ログイン</a></li>
+					{% endif %}
+				</ul>
+				
+				{% block taskbar %}
+				{% endblock %}
+			</div>
+			
+			<div class="header">
+				<h1><a href="/page/index/">KOJ</a></h1>
+				<p><em>K</em>ochi University of Technology <em>O</em>nline <em>J</em>udge</p>
+			</div>
+
+			<div class="sidebar">
+				<div class="creole">
+					{{ sidebar|safe }}
+				</div>
+
+				{% if is_admin %}
+				<div class="edit">
+					[<a href="/page/sidebar/edit/">編集</a>]
+				</div>
+				{% endif %}
+			</div>
+
+			<div class="content creole">
+				{% block content %}{% endblock %}
+			</div>
+
+			<div class="footer">
+				<p class="copyright">Copyright &copy; 2011-2012 <a href="http://wikiwiki.jp/kut-pg/">KUT-PG</a>. All Rights Reserved.</p>
+			</div>
+		</div>
+	</body>
+	
+</html>
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

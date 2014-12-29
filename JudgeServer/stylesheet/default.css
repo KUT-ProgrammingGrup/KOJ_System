@@ -1,0 +1,360 @@
+@charset "utf-8";
+
+/* ベース */
+:lang(ja) {
+	font-family: "VL ゴシック", "ヒラギノ角ゴ Pro W3", "ＭＳ ゴシック", sans-serif;
+}
+
+:lang(en) {
+	font-family: Cantarell, Corbel, Helvetica, sans-serif;
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+ol ol {
+	list-style-type: lower-roman;
+}
+
+ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+ul {
+	list-style-type: disc;
+}
+
+ul ul {
+	list-style-type: circle;
+}
+
+ul ul ul {
+	list-style-type: square;
+}
+
+html, body {
+	background-color: #ebfff2;
+	font-family: "VL ゴシック", "ＭＳ ゴシック", "ヒラギノ角ゴ Pro W3", sans-serif;
+}
+
+.wrap {
+	width: 900px;
+	padding: 18px;
+	margin: 0px auto;
+	background-color: white;
+}
+
+.warning {
+	color :red;
+	font-size: 14px;
+}
+
+.warning p {
+	margin-bottom: 12px;
+}
+
+.taskbar {
+	position: relative;
+	margin-bottom: 12px;
+	font-size: 12px;
+}
+
+.taskbar li {
+	display: inline;
+}
+
+.taskbar .etc {
+	position: absolute;
+	left: 0;
+	top: 0;
+	text-align: left;
+}
+
+.taskbar .etc li.delimiter {
+	padding-left: 1ex;
+	border-left: 1px solid gray;
+}
+
+.taskbar .account {
+	text-align: right;
+}
+
+.header {
+	padding: 8px 25px;
+	margin-bottom: 18px;
+	border: 3px double #71e69a;
+}
+
+.header * {
+	font-family: Cantarell, Corbel, Helvetica, sans-serif;
+}
+
+.header h1 {
+	display: inline-block;
+	font-size: 38px;
+}
+
+.header h1 a {
+	color: #0a662a;
+	text-decoration: none;
+}
+
+.header p {
+	display: inline-block;
+	margin-left: 22px;
+	color: #529168;
+	text-decoration: underline;
+	font-size: 14px;
+}
+
+.header em {
+	color: #0a662a;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+/* creole */
+.creole strong {
+	font-weight: bold;
+}
+
+.creole em {
+	font-style: italic;
+}
+
+.creole h2 {
+	border-left: solid #0a8735;
+	background-color: #14b34b;
+	color: white;
+}
+
+.creole h3 { 
+	border-left: solid #3cba5d;
+	background-color: #9febb4;
+	color: #05541a;
+}
+
+.creole h4 {
+	border: 1px solid #139c3e;
+}
+
+.creole h5 {
+	color: #097a2d;
+	border-bottom: 1px solid #097a2d;
+}
+
+.creole h6 {
+	border-bottom: 1px solid black;
+}
+
+.creole table {
+	border: 3px double #2eb843;
+	border-collapse: collapse;
+}
+
+.creole td, .creole th {
+	border: 1px solid #2eb843;
+}
+
+.creole th {
+	text-align: center;
+	font-weight: bold;
+}
+
+.creole pre {
+	padding: 2px;
+	margin: 14px;
+	border: 1px solid #8ab590;
+	overflow-x: auto;
+}
+
+.creole .underline {
+	text-decoration: underline;
+}
+
+.creole textarea {
+	padding: 2px;
+	margin: 14px;
+	border: 1px solid #8ab590;
+	width: 601px;
+}
+
+.creole p.img {
+	text-align: center;
+}
+
+.creole .bookmark {
+	margin-top: 30px;
+	text-align: right;
+}
+
+/* sidebar */
+.sidebar {
+	float: left;
+	width: 200px;
+	padding: 8px 9px 8px 20px;
+	font-size: 14px;
+	border: 1px dotted #0f9e41;
+}
+
+.sidebar h2 {
+	margin: 18px 0 7px -11px;
+	padding: 4px 0 4px 6px;
+	border-left-width: 10px;
+	font-size: 15px;
+}
+
+.sidebar h2:first-child {
+	margin-top: 0;
+}
+
+.sidebar ol, .sidebar ul {
+	margin: 6px 0;
+	list-style-position: inside;
+}
+
+.sidebar ol ol, .sidebar ol ul,
+.sidebar ul ol, .sidebar ul ul {
+	margin-left: 15px;
+}
+
+.sidebar .edit {
+	margin-top: 10px;	
+	font-size: 12px;
+}
+
+.content {
+	padding: 8px 9px 8px 25px;
+	margin-left: 231px;
+	width: 635px; /* 669 - margin - padding */
+	font-size: 16px;
+}
+
+/* clearfix for modern browser */
+.content:after {
+	display: block;
+	clear: both;
+	content: "";
+}
+
+.content h2, .content h3, .content h4 {
+	margin: 25px 0 10px -15px;
+	padding: 6px;
+	border-left-width: 10px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.content h5, .content h6 {
+	margin: 25px 0 10px -15px;
+	padding: 3px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.content h2:first-child,
+.content h3:first-child,
+.content h4:first-child,
+.content h5:first-child,
+.content h6:first-child {
+	margin-top: 0;
+}
+
+.content h2 + h2,
+.content h2 + h3,
+.content h2 + h4,
+.content h2 + h5,
+.content h2 + h6,
+.content h3 + h2,
+.content h3 + h3 {
+	margin-top: 0px;
+}
+
+.content ol, .content ul {
+	margin: 10px 0 10px 15px;
+	list-style-position: inside;
+}
+
+.content p {
+	margin-bottom: 13px;
+}
+
+.content table {
+	margin-bottom: 13px;
+}
+
+.content td, .content th {
+	padding: 3px 5px;
+}
+
+.footer {
+	padding: 8px 0 0;
+	margin-top: 18px;
+	border-top: 3px double #71e69a;
+	text-align: center;
+	font-size: 12px;
+}
+
+@media print {
+	* {
+		color: black !important;
+		border-color: black !important;
+	}
+	
+	html, body {
+		background-color: white;
+	}
+	
+	.wrap > .header {
+		display: none;
+	}
+	
+	.taskbar {
+		display: none;
+	}
+	
+	.sidebar {
+		display: none;
+	}
+	
+	.content  {
+		padding-top: 0;
+		margin-left: 0;
+		width: 866px /* 231 (sidebar) + 866 */;
+	}
+	
+	.wrap > .warning {
+		display: none;
+	}
+	
+	.noprint {
+		display: none;
+	}
+	
+	/* creole */
+	.creole h2,
+	.creole h3,
+	.creole h4,
+	.creole h5,
+	.creole h6 {
+		background-color: white;
+	}
+	
+	.creole h2 {
+		border-style: solid;
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 1px;
+	}
+	
+	.creole h3 { 
+		border-style: solid;
+		border-top-width: 0;
+		border-right-width: 0;
+		border-bottom-width: 1px;
+	}
+	
+}
+
+/* vim: se noet ts=4 sts=0 sw=4 ft=css : */

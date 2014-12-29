@@ -1,0 +1,159 @@
+{% extends "default.html" %}
+
+{# Last Change: 2011/11/14 17:29:21 +0900. #}
+
+{# template/contest_edit.html #}
+{# コンテスト編集ページ テンプレート #}
+
+{# ---------- スタイルシート ---------- #}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/edit.css" />
+<link rel="stylesheet" type="text/css" href="/stylesheet/contest_edit.css" />
+{% endblock %}
+
+{# ---------- スクリプト ---------- #}
+{% block javascript %}
+<script type="text/javascript" defer="defer">
+// <![CDATA[
+	
+	var contest_problem     = {{ contest_problem }};
+	var contest_point_small = {{ contest_point_small }};
+	var contest_point_large = {{ contest_point_large }};
+	
+// ]]>
+</script>
+
+<script type="text/javascript" src="/javascript/contest_edit.js" defer="defer"></script>
+{% endblock %}
+
+{# ---------- タイトル ---------- #}
+{% block title %}コンテスト「{{ contest_id }}」の編集{% endblock %}
+
+{# ---------- タスクバー ---------- #}
+{% block taskbar %}
+<ul class="etc">
+	<li><a href="/contest/{{ contest_id }}/">戻る</a></li>
+</ul>
+{% endblock %}
+
+{# ---------- コンテンツ ---------- #}
+{% block content %}
+
+<h2>コンテスト「{{ contest_id }}」の編集</h2>
+
+<div class="edit">
+	<form action="/contest/{{ contest_id }}/edit/" method="post">
+		<p>
+			<label>
+				コンテストタイトル
+				<input type="text" name="title" value="{{ contest_title }}" />
+			</label>
+		</p>
+		
+		<p>
+			<label>
+				コンテスト詳細ページ
+				<input type="text" name="page" value="{{ contest_page }}" />
+			</label>
+		</p>
+		
+		<p class="date">
+			<label for="contest_start_date_year">コンテスト開始日時</label>
+			
+			<input type="hidden" name="start_date" value="{{ contest_start_date }}" />
+			
+			<input type="text" class="year" id="contest_start_date_year" />年
+			<input type="text" class="month" />月
+			<input type="text" class="date" />日
+			<input type="text" class="hour" />時
+			<input type="text" class="minute" />分
+		</p>
+		
+		<p class="date">
+			<label for="contest_end_date_year">コンテスト終了日時</label>
+			
+			<input type="hidden" name="end_date" value="{{ contest_end_date }}" />
+			
+			<input type="text" class="year" id="contest_end_date_year" />年
+			<input type="text" class="month" />月
+			<input type="text" class="date" />日
+			<input type="text" class="hour" />時
+			<input type="text" class="minute" />分
+		</p>
+		
+		<p>
+			<input type="button" value="キャンセル" class="cancel" />
+			<input type="submit" value="保存" />
+		</p>
+		
+		<h3>問題の情報</h3>
+		
+		<p><input type="button" value="問題の追加" class="add_problem" /></p>
+		
+		<p>問題を追加するには、上のボタンをクリックしてください。</p>
+		<p>片方の入力しかない問題を作成する場合、入力が存在しない方は空欄もしくはゼロにしてください。</p>
+		
+		{# 問題のテンプレート #}
+		<div class="problem_template">
+			<h4><span class="title">問題0</span> <input type="button" value="削除" class="delete" /></h4>
+			
+			<p>
+				<label>
+					問題番号
+					<input type="text" name="problem_id_0" value="" disabled="disabled" />
+				</label>
+			</p>
+			
+			<p>
+				<label>
+					配点 (small)
+					<input type="text" name="problem_point_small_0" value="" disabled="disabled" />
+				</label>
+			</p>
+			
+			<p>
+				<label>
+					配点 (large)
+					<input type="text" name="problem_point_large_0" value="" disabled="disabled" />
+				</label>
+			</p>
+		</div>
+		
+		<div class="problem">
+		</div>
+		
+		<h3>コンテストの公開</h3>
+		
+		<p>
+			<label>
+				<input type="checkbox" name="public" value="true" 
+				{% if contest_public %}
+				checked="checked"
+				{% endif %}
+				/>
+				コンテストを公開する
+			</label>
+		</p>
+		
+		<p>コンテストを公開し、一般ユーザに閲覧可能な状態にする場合、上のチェックボックスにチェックを付けてください。</p>
+
+		<p>コンテストの公開と、開始日時は関係ありません。公開されていても、開始日時より前の問題の閲覧はできません。</p>
+		
+	</form>
+	
+	{# コンテストの削除 #}
+	{% if contest %}
+	<h2>コンテストの削除</h2>
+	
+	<form action="/contest/{{ contest_id }}/delete/" method="post" class="delete">
+		<p><input type="submit" value="削除" /></p>
+	</form>
+	
+	<p class="underline">一度削除したコンテストは<strong>復活できません</strong>。</p>
+	<p>ただし、問題の提出情報は保持されます。</p>
+	{% endif %}
+</div>
+
+{% endblock %}
+
+{# vim: se noet ts=2 sw=2 sts=0 ft=htmldjango : #}

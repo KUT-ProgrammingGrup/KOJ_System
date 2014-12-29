@@ -1,0 +1,117 @@
+# Last Change: 2012/06/20 21:46:27 +0900.
+
+application: kut-oj
+version: 4
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+
+# ---------- 静的ファイル ----------
+
+# スタイルシート
+- url: /stylesheet
+  static_dir: stylesheet
+
+# スクリプト
+- url: /javascript
+  static_dir: javascript
+
+# 画像
+- url: /image
+  static_dir: image
+
+# ---------- ページ ----------
+
+# ページの編集
+- url: /page/\w+/edit/
+  script: main.py
+  login: admin
+
+# ページの削除
+- url: /page/\w+/delete/
+  script: main.py
+  login: admin
+
+# 添付ファイル
+- url: /page/\w+/attach/
+  script: main.py
+  login: admin
+
+# 添付ファイルの削除
+- url: /page/\w+/[\w\.-]+/delete/
+  script: main.py
+  login: admin
+
+# ---------- 問題 ---------- 
+
+# 編集
+- url: /problem/\d+/edit/
+  script: main.py
+  login: admin
+
+# 削除
+- url: /problem/\d+/delete/
+  script: main.py
+  login: admin
+
+# 添付ファイル
+- url: /problem/\d+/attach/
+  script: main.py
+  login: admin
+
+# 添付ファイル削除
+- url: /problem/\d+/[\w\.-]/delete/
+  script: main.py
+  login: admin
+
+# 出力ファイルダウンロード
+- url: /problem/(\d+)/\d+-(small|large)\.out
+  script: main.py
+  login: admin
+
+# 入力ファイルダウンロード
+- url: /problem/\d+/\d+\-(small|large)\.in
+  script: main.py
+  login: required
+
+# 提出
+- url: /problem/\d+/submit/(small|large)/
+  script: main.py
+  login: required
+
+# ソースファイルのダウンロード
+- url: /problem/\d+/\d+/(small|large)/\d+/
+  script: main.py
+  login: admin
+
+# ---------- コンテスト ----------
+
+# 編集ページ
+- url: /contest/\w+/edit/
+  script: main.py
+  login: admin
+
+# 削除ページ
+- url: /contest/\w+/delete/
+  script: main.py
+  login: admin
+
+# ---------- ユーザー ----------
+
+# 編集
+- url: /user/\d+/edit/
+  script: main.py
+  login: required
+
+# ---------- その他 ----------
+
+- url: /.*
+  script: main.py
+
+libraries:
+- name: django
+  version: "1.2"
+
+# vim: se noet ts=4 sw=4 sts=0 ft=yaml :
